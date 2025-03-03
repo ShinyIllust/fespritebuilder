@@ -130,8 +130,6 @@ function ImageSelector() {
     setBodyImages(loadedBodyImages);
     setMaskImages(loadedMaskImages);
 
-    console.log(loadedHeadImages);
-
     setLoading(false);
   }, []);
 
@@ -218,8 +216,8 @@ function ImageSelector() {
         headBack={headImages[selectedHead]?.[selectedArmy]?.headBack}
         bodyFront={bodyImages[selectedBody]?.[selectedArmy]?.front}
         bodyBack={bodyImages[selectedBody]?.[selectedArmy]?.back}
-        maskFront={maskImages[selectedBody]?.[selectedArmy]?.hairFront}
-        maskBack={maskImages[selectedBody]?.[selectedArmy]?.hairBack}
+        maskFront={maskImages[selectedHead]?.[selectedArmy]?.hairFront}
+        maskBack={maskImages[selectedHead]?.[selectedArmy]?.hairBack}
         headX={headX}
         headY={headY}
         color={color}
