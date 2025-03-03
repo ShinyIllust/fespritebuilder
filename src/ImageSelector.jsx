@@ -148,81 +148,98 @@ function ImageSelector() {
   }
 
   return (
-    <div>
-      <h1>Select Parts</h1>
-
-      <div>
-        <label>Select Head: </label>
-        <select onChange={(e) => setSelectedHead(e.target.value)} value={selectedHead}>
-          {headOptions.length > 0 ? (
-            headOptions.map((head) => (
-              <option key={head} value={head}>
-                {head}
-              </option>
-            ))
-          ) : (
-            <option>No heads available</option>
-          )}
-        </select>
-      </div>
-
-      <div>
-        <label>Select Body: </label>
-        <select onChange={(e) => setSelectedBody(e.target.value)} value={selectedBody}>
-          {bodyOptions.length > 0 ? (
-            bodyOptions.map((body) => (
-              <option key={body} value={body}>
-                {body}
-              </option>
-            ))
-          ) : (
-            <option>No bodies available</option>
-          )}
-        </select>
-      </div>
-
-      <div>
-        <label>Select Army: </label>
-        <select onChange={(e) => setSelectedArmy(e.target.value)}>
-          <option value={'blue'}>Blue</option>
-          <option value={'green'}>Green</option>
-          <option value={'red'}>Red</option>
-          <option value={'purple'}>Purple</option>
-        </select>
-      </div>
-
+    <div className='flex justify-center'>
       <div>
         <div>
-          <label>Head X</label>
-          <input type='range' min={-32} max={32} value={headX} onChange={(e) => setHeadX(parseInt(e.target.value))} />
-          <span>{headX}px</span>
-        </div>
-        <div>
-          <label>Head Y</label>
-          <input type='range' min={-32} max={32} value={headY} onChange={(e) => setHeadY(parseInt(e.target.value))} />
-          <span>{headY}px</span>
-        </div>
-      </div>
+          <h1>Select Parts</h1>
+          <div>
+            <label>Select Head: </label>
+            <select onChange={(e) => setSelectedHead(e.target.value)} value={selectedHead}>
+              {headOptions.length > 0 ? (
+                headOptions.map((head) => (
+                  <option key={head} value={head}>
+                    {head}
+                  </option>
+                ))
+              ) : (
+                <option>No heads available</option>
+              )}
+            </select>
+          </div>
 
-      <div>
-        <label>Hair Color: </label>
-        <input type='color' value={color} onChange={(e) => setColor(e.target.value)} />
-        <input type='text' value={color} onChange={(e) => setColor(e.target.value)} />
-      </div>
+          <div>
+            <label>Select Body: </label>
+            <select onChange={(e) => setSelectedBody(e.target.value)} value={selectedBody}>
+              {bodyOptions.length > 0 ? (
+                bodyOptions.map((body) => (
+                  <option key={body} value={body}>
+                    {body}
+                  </option>
+                ))
+              ) : (
+                <option>No bodies available</option>
+              )}
+            </select>
+          </div>
 
-      <Combiner
-        hairFront={headImages[selectedHead]?.[selectedArmy]?.hairFront}
-        headFront={headImages[selectedHead]?.[selectedArmy]?.headFront}
-        hairBack={headImages[selectedHead]?.[selectedArmy]?.hairBack}
-        headBack={headImages[selectedHead]?.[selectedArmy]?.headBack}
-        bodyFront={bodyImages[selectedBody]?.[selectedArmy]?.front}
-        bodyBack={bodyImages[selectedBody]?.[selectedArmy]?.back}
-        maskFront={maskImages[selectedHead]?.[selectedArmy]?.hairFront}
-        maskBack={maskImages[selectedHead]?.[selectedArmy]?.hairBack}
-        headX={headX}
-        headY={headY}
-        color={color}
-      />
+          <div>
+            <label>Select Army: </label>
+            <select onChange={(e) => setSelectedArmy(e.target.value)}>
+              <option value={'blue'}>Blue</option>
+              <option value={'green'}>Green</option>
+              <option value={'red'}>Red</option>
+              <option value={'purple'}>Purple</option>
+            </select>
+          </div>
+
+          <div>
+            <div>
+              <label>Head X</label>
+              <input
+                type='range'
+                min={-32}
+                max={32}
+                value={headX}
+                onChange={(e) => setHeadX(parseInt(e.target.value))} />
+              <span>{headX}px</span>
+            </div>
+            <div>
+              <label>Head Y</label>
+              <input
+                type='range'
+                min={-32}
+                max={32}
+                value={headY}
+                onChange={(e) => setHeadY(parseInt(e.target.value))} />
+              <span>{headY}px</span>
+            </div>
+          </div>
+
+          <div>
+            <label>Hair Color: </label>
+            <input type='color' value={color} onChange={(e) => setColor(e.target.value)} />
+            <input
+              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              type='text'
+              value={color}
+              onChange={(e) => setColor(e.target.value)} />
+          </div>
+        </div>
+
+        <Combiner
+          hairFront={headImages[selectedHead]?.[selectedArmy]?.hairFront}
+          headFront={headImages[selectedHead]?.[selectedArmy]?.headFront}
+          hairBack={headImages[selectedHead]?.[selectedArmy]?.hairBack}
+          headBack={headImages[selectedHead]?.[selectedArmy]?.headBack}
+          bodyFront={bodyImages[selectedBody]?.[selectedArmy]?.front}
+          bodyBack={bodyImages[selectedBody]?.[selectedArmy]?.back}
+          maskFront={maskImages[selectedHead]?.[selectedArmy]?.hairFront}
+          maskBack={maskImages[selectedHead]?.[selectedArmy]?.hairBack}
+          headX={headX}
+          headY={headY}
+          color={color}
+        />
+      </div>
     </div>
   );
 }

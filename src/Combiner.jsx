@@ -127,10 +127,28 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
     link.click();
   };
 
+  const downloadImageUpscale = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const upscaledCanvas = document.createElement('canvas');
+    const upscaledCtx = upscaledCanvas.getContext('2d');
+    upscaledCanvas.width = 128;
+    upscaledCanvas.height = 128;
+    upscaledCtx.imageSmoothingEnabled = false;
+    upscaledCtx.drawImage(canvas, 0, 0, 32, 32, 0, 0, 128, 128);
+    const imageUrl = upscaledCanvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = spriteName + '128x128.png';
+    link.click();
+  };
+
+
   const [spriteName, setSpriteName] = useState('sprite');
 
   return (
     <>
+      <h1>Preview</h1>
       <div>
         <canvas
           ref={canvasRef}
@@ -143,13 +161,24 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
         ></canvas>
       </div>
       <div>
-        <label>Sprite Name: </label>
-        <input type='text' value={spriteName} onChange={(e) => setSpriteName(e.target.value)} />
-      </div>
-      <div>
-        <button onClick={downloadImage} style={{ marginTop: '10px' }}>
-          Download Image
-        </button>
+        <h1>Export</h1>
+        <div>
+          <label>Sprite Name: </label>
+          <input 
+          className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+          type='text' 
+          value={spriteName} 
+          onChange={(e) => setSpriteName(e.target.value)} />
+        </div>
+        <div>
+          <button className='mt-5 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded' onClick={downloadImage}>
+            Download Sprite
+          </button>
+          <br/>
+          <button className='mt-5 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded' onClick={downloadImageUpscale}>
+            Download Sprite (128x128)
+          </button>
+        </div>
       </div>
     </>
   );
