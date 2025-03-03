@@ -71,21 +71,66 @@ const loadBodyImages = (context) => {
   return images;
 };
 
+const loadMaskImages = (context) => {
+  const images = {};
+
+  Object.keys(context).forEach((file) => {
+    const baseName = file.split('/').pop().split('_')[0];
+
+    let type = null;
+    if (file.includes('hairfront')) type = 'hairFront';
+    if (file.includes('headfront')) type = 'headFront';
+    if (file.includes('hairback')) type = 'hairBack';
+    if (file.includes('headback')) type = 'headBack';
+
+    let color = null;
+    if (file.includes('blue')) color = 'blue';
+    if (file.includes('red')) color = 'red';
+    if (file.includes('green')) color = 'green';
+    if (file.includes('purple')) color = 'purple';
+
+    if (!images[baseName]) {
+      images[baseName] = {};
+    }
+
+    if (color) {
+      if (!images[baseName][color]) {
+        images[baseName][color] = {};
+      }
+      images[baseName][color][type] = context[file];
+    } else {
+      ['blue', 'red', 'green', 'purple'].forEach((col) => {
+        if (!images[baseName][col]) {
+          images[baseName][col] = {};
+        }
+        images[baseName][col][type] = context[file];
+      });
+    }
+  });
+
+  return images;
+}
+
 function ImageSelector() {
   const [headImages, setHeadImages] = useState({});
   const [bodyImages, setBodyImages] = useState({});
+  const [maskImages, setMaskImages] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const headContext = import.meta.glob('./assets/images/heads/*.png', { eager: true });
     const bodyContext = import.meta.glob('./assets/images/bodies/*.png', { eager: true });
-    const maskContext = import.meta.glob('./assets/images/masks/*.png', { eager: true });
+    const maskContext = import.meta.glob('./assets/images/heads/mask/*.png', { eager: true });
 
     const loadedHeadImages = loadHeadImages(headContext);
     const loadedBodyImages = loadBodyImages(bodyContext);
+    const loadedMaskImages = loadMaskImages(maskContext);
 
     setHeadImages(loadedHeadImages);
     setBodyImages(loadedBodyImages);
+    setMaskImages(loadedMaskImages);
+
+    console.log(loadedHeadImages);
 
     setLoading(false);
   }, []);
@@ -100,11 +145,8 @@ function ImageSelector() {
   const [headY, setHeadY] = useState(0);
   const [color, setColor] = useState('#c0c0c0');
 
-  const selectedHeadImage = selectedHead && headImages[selectedHead] ? headImages[selectedHead][selectedArmy] : {};
-  const selectedBodyImage = selectedBody && bodyImages[selectedBody] ? bodyImages[selectedBody][selectedArmy] : {};
-
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
@@ -176,6 +218,8 @@ function ImageSelector() {
         headBack={headImages[selectedHead]?.[selectedArmy]?.headBack}
         bodyFront={bodyImages[selectedBody]?.[selectedArmy]?.front}
         bodyBack={bodyImages[selectedBody]?.[selectedArmy]?.back}
+        maskFront={maskImages[selectedBody]?.[selectedArmy]?.hairFront}
+        maskBack={maskImages[selectedBody]?.[selectedArmy]?.hairBack}
         headX={headX}
         headY={headY}
         color={color}

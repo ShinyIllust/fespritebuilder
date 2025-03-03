@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBack, headX, headY, color }) {
+function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBack, maskFront, maskBack, headX, headY, color }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -17,13 +17,30 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
 
     const loadImages = (src, x, y) => {
       return new Promise((resolve) => {
-        if (!src || !src.default) {  // Check if `src` is valid and has a `default` property
+        if (!src || !src.default) { 
           console.log("Invalid source:", src);
           return resolve();
         }
     
         const img = new Image();
-        img.src = src.default;  // Access the actual URL from the `default` property
+        img.src = src.default;
+        img.onload = () => {
+          ctx.drawImage(img, x, y, img.width, img.height);
+          resolve();
+        };
+      });
+    };
+
+    const loadMasks = (src, x, y) => {
+      console.log(src);
+      return new Promise((resolve) => {
+        if (!src || !src.default) { 
+          console.log("Invalid source:", src);
+          return resolve();
+        }
+    
+        const img = new Image();
+        img.src = src.default;
         img.onload = () => {
           ctx.drawImage(img, x, y, img.width, img.height);
           resolve();
@@ -34,15 +51,17 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
 
     const drawImages = async () => {
       if (hairBack) await loadImages(hairBack, headX, headY);
+      if (maskBack) await loadMasks(maskBack, headX, headY);
       if (headBack) await loadImages(headBack, headX, headY);
       if (bodyBack) await loadImages(bodyBack, 0, 0);
       if (hairFront) await loadImages(hairFront, headX, headY);
+      if (maskFront) await loadMasks(maskFront, headX, headY);
       if (headFront) await loadImages(headFront, headX, headY);
       if (bodyFront) await loadImages(bodyFront, 0, 0);
     }
 
     drawImages();
-  }, [hairFront, hairBack, headFront, headBack, bodyFront, bodyBack, headX, headY]);
+  }, [hairFront, hairBack, headFront, headBack, bodyFront, bodyBack, maskFront, maskBack, headX, headY, color]);
 
   return (
     <div>
