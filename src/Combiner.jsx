@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBack, maskFront, maskBack, headX, headY, color }) {
   const canvasRef = useRef(null);
@@ -116,18 +116,42 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
     drawImages();
   }, [hairFront, hairBack, headFront, headBack, bodyFront, bodyBack, maskFront, maskBack, headX, headY, color]);
 
+  const downloadImage = () => {
+    const canvas = canvasRef.current;
+    const imageUrl = canvas.toDataURL('image/png');
+
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = spriteName + '.png';
+
+    link.click();
+  };
+
+  const [spriteName, setSpriteName] = useState('sprite');
+
   return (
-    <div>
-      <canvas
-        ref={canvasRef}
-        style={{
-          imageRendering: 'pixelated',
-          width: '128px',
-          height: '128px',
-          border: '1px solid black',
-        }}
-      ></canvas>
-    </div>
+    <>
+      <div>
+        <canvas
+          ref={canvasRef}
+          style={{
+            imageRendering: 'pixelated',
+            width: '128px',
+            height: '128px',
+            border: '1px solid black',
+          }}
+        ></canvas>
+      </div>
+      <div>
+        <label>Sprite Name: </label>
+        <input type='text' value={spriteName} onChange={(e) => setSpriteName(e.target.value)} />
+      </div>
+      <div>
+        <button onClick={downloadImage} style={{ marginTop: '10px' }}>
+          Download Image
+        </button>
+      </div>
+    </>
   );
 }
 

@@ -207,6 +207,7 @@ function ImageSelector() {
       <div>
         <label>Hair Color: </label>
         <input type='color' value={color} onChange={(e) => setColor(e.target.value)} />
+        <input type='text' value={color} onChange={(e) => setColor(e.target.value)} />
       </div>
 
       <Combiner
