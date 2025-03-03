@@ -1,0 +1,187 @@
+import React, { useState, useEffect } from 'react';
+import Combiner from './Combiner';
+
+const loadHeadImages = (context) => {
+  const images = {};
+
+  Object.keys(context).forEach((file) => {
+    const baseName = file.split('/').pop().split('_')[0];
+
+    let type = null;
+    if (file.includes('hairfront')) type = 'hairFront';
+    if (file.includes('headfront')) type = 'headFront';
+    if (file.includes('hairback')) type = 'hairBack';
+    if (file.includes('headback')) type = 'headBack';
+
+    let color = null;
+    if (file.includes('blue')) color = 'blue';
+    if (file.includes('red')) color = 'red';
+    if (file.includes('green')) color = 'green';
+    if (file.includes('purple')) color = 'purple';
+
+    if (!images[baseName]) {
+      images[baseName] = {};
+    }
+
+    if (color) {
+      if (!images[baseName][color]) {
+        images[baseName][color] = {};
+      }
+      images[baseName][color][type] = context[file];
+    } else {
+      ['blue', 'red', 'green', 'purple'].forEach((col) => {
+        if (!images[baseName][col]) {
+          images[baseName][col] = {};
+        }
+        images[baseName][col][type] = context[file];
+      });
+    }
+  });
+
+  return images;
+};
+
+const loadBodyImages = (context) => {
+  const images = {};
+
+  Object.keys(context).forEach((file) => {
+    const baseName = file.split('/').pop().split('_')[0];
+
+    let type = 'unknown';
+    if (file.includes('front')) type = 'front';
+    if (file.includes('back')) type = 'back';
+
+    let color = 'unknown';
+    if (file.includes('blue')) color = 'blue';
+    if (file.includes('red')) color = 'red';
+    if (file.includes('green')) color = 'green';
+    if (file.includes('purple')) color = 'purple';
+
+    if (!images[baseName]) {
+      images[baseName] = {};
+    }
+
+    if (!images[baseName][color]) {
+      images[baseName][color] = {};
+    }
+
+    images[baseName][color][type] = context[file];
+  });
+
+  return images;
+};
+
+function ImageSelector() {
+  const [headImages, setHeadImages] = useState({});
+  const [bodyImages, setBodyImages] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const headContext = import.meta.glob('./assets/images/heads/*.png', { eager: true });
+    const bodyContext = import.meta.glob('./assets/images/bodies/*.png', { eager: true });
+    const maskContext = import.meta.glob('./assets/images/masks/*.png', { eager: true });
+
+    const loadedHeadImages = loadHeadImages(headContext);
+    const loadedBodyImages = loadBodyImages(bodyContext);
+
+    setHeadImages(loadedHeadImages);
+    setBodyImages(loadedBodyImages);
+
+    setLoading(false);
+  }, []);
+
+  const headOptions = Object.keys(headImages);
+  const bodyOptions = Object.keys(bodyImages);
+
+  const [selectedHead, setSelectedHead] = useState(headOptions.length ? headOptions[0] : '');
+  const [selectedBody, setSelectedBody] = useState(bodyOptions.length ? bodyOptions[0] : '');
+  const [selectedArmy, setSelectedArmy] = useState('blue');
+  const [headX, setHeadX] = useState(0);
+  const [headY, setHeadY] = useState(0);
+  const [color, setColor] = useState('#c0c0c0');
+
+  const selectedHeadImage = selectedHead && headImages[selectedHead] ? headImages[selectedHead][selectedArmy] : {};
+  const selectedBodyImage = selectedBody && bodyImages[selectedBody] ? bodyImages[selectedBody][selectedArmy] : {};
+
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
+
+  return (
+    <div>
+      <h1>Select Parts</h1>
+
+      <div>
+        <label>Select Head: </label>
+        <select onChange={(e) => setSelectedHead(e.target.value)} value={selectedHead}>
+          {headOptions.length > 0 ? (
+            headOptions.map((head) => (
+              <option key={head} value={head}>
+                {head}
+              </option>
+            ))
+          ) : (
+            <option>No heads available</option>
+          )}
+        </select>
+      </div>
+
+      <div>
+        <label>Select Body: </label>
+        <select onChange={(e) => setSelectedBody(e.target.value)} value={selectedBody}>
+          {bodyOptions.length > 0 ? (
+            bodyOptions.map((body) => (
+              <option key={body} value={body}>
+                {body}
+              </option>
+            ))
+          ) : (
+            <option>No bodies available</option>
+          )}
+        </select>
+      </div>
+
+      <div>
+        <label>Select Army: </label>
+        <select onChange={(e) => setSelectedArmy(e.target.value)}>
+          <option value={'blue'}>Blue</option>
+          <option value={'green'}>Green</option>
+          <option value={'red'}>Red</option>
+          <option value={'purple'}>Purple</option>
+        </select>
+      </div>
+
+      <div>
+        <div>
+          <label>Head X</label>
+          <input type='range' min={-32} max={32} value={headX} onChange={(e) => setHeadX(parseInt(e.target.value))} />
+          <span>{headX}px</span>
+        </div>
+        <div>
+          <label>Head Y</label>
+          <input type='range' min={-32} max={32} value={headY} onChange={(e) => setHeadY(parseInt(e.target.value))} />
+          <span>{headY}px</span>
+        </div>
+      </div>
+
+      <div>
+        <label>Hair Color: </label>
+        <input type='color' value={color} onChange={(e) => setColor(e.target.value)} />
+      </div>
+
+      <Combiner
+        hairFront={headImages[selectedHead]?.[selectedArmy]?.hairFront}
+        headFront={headImages[selectedHead]?.[selectedArmy]?.headFront}
+        hairBack={headImages[selectedHead]?.[selectedArmy]?.hairBack}
+        headBack={headImages[selectedHead]?.[selectedArmy]?.headBack}
+        bodyFront={bodyImages[selectedBody]?.[selectedArmy]?.front}
+        bodyBack={bodyImages[selectedBody]?.[selectedArmy]?.back}
+        headX={headX}
+        headY={headY}
+        color={color}
+      />
+    </div>
+  );
+}
+
+export default ImageSelector;
