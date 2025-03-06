@@ -5,7 +5,7 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
   const canvasRef = useRef(null);
 
   const placeholder = {};
-  placeholder.default = '/src/assets/images/placeholder.png'
+  placeholder.default = '/src/assets/images/placeholder.png';
 
   useEffect(() => {
     const canvas = canvasRef.current;
