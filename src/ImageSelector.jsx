@@ -121,6 +121,9 @@ function ImageSelector() {
     const headContext = import.meta.glob('./assets/images/heads/*.png', { eager: true });
     const bodyContext = import.meta.glob('./assets/images/bodies/*.png', { eager: true });
     const maskContext = import.meta.glob('./assets/images/heads/mask/*.png', { eager: true });
+    const placeholderContext = import.meta.glob('./assets/images/placeholder.png', { eager: true });
+
+    console.log(placeholderContext);
 
     const loadedHeadImages = loadHeadImages(headContext);
     const loadedBodyImages = loadBodyImages(bodyContext);
