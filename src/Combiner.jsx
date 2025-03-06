@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBack, maskFront, maskBack, headX, headY, color }) {
+
   const canvasRef = useRef(null);
+
+  const placeholder = {};
+  placeholder.default = '/src/assets/images/placeholder.png'
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -103,14 +107,18 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
     };
 
     const drawImages = async () => {
-      if (hairBack) await loadImages(hairBack, headX, headY);
-      if (maskBack) await loadMasks(maskBack, headX, headY, color, ctx);
-      if (headBack) await loadImages(headBack, headX, headY);
-      if (bodyBack) await loadImages(bodyBack, 0, 0);
-      if (hairFront) await loadImages(hairFront, headX, headY);
-      if (maskFront) await loadMasks(maskFront, headX, headY, color, ctx);
-      if (headFront) await loadImages(headFront, headX, headY);
-      if (bodyFront) await loadImages(bodyFront, 0, 0);
+      if(!hairFront && !bodyFront){
+        loadImages(placeholder, 0, 0);
+      } else {
+        await loadImages(hairBack, headX, headY);
+        await loadMasks(maskBack, headX, headY, color, ctx);
+        await loadImages(headBack, headX, headY);
+        await loadImages(bodyBack, 0, 0);
+        await loadImages(hairFront, headX, headY);
+        await loadMasks(maskFront, headX, headY, color, ctx);
+        await loadImages(headFront, headX, headY);
+        await loadImages(bodyFront, 0, 0);
+      }
     }
 
     drawImages();

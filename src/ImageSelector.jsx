@@ -155,6 +155,7 @@ function ImageSelector() {
           <div>
             <label>Select Head: </label>
             <select onChange={(e) => setSelectedHead(e.target.value)} value={selectedHead}>
+              <option value='none'>none</option>
               {headOptions.length > 0 ? (
                 headOptions.map((head) => (
                   <option key={head} value={head}>
@@ -170,6 +171,7 @@ function ImageSelector() {
           <div>
             <label>Select Body: </label>
             <select onChange={(e) => setSelectedBody(e.target.value)} value={selectedBody}>
+              <option value='none'>none</option>
               {bodyOptions.length > 0 ? (
                 bodyOptions.map((body) => (
                   <option key={body} value={body}>
