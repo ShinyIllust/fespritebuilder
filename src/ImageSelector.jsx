@@ -245,7 +245,7 @@ function ImageSelector() {
             <label className='col-span-1 textShadow'>Select Army</label>
           </div>
           <select
-            className='col-span-1 w-30'
+            className='col-span-1 w-20 lg:w-40'
             onChange={(e) => setSelectedArmy(e.target.value)}>
             <option value={'blue'}>Blue</option>
             <option value={'green'}>Green</option>
