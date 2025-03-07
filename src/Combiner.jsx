@@ -175,12 +175,12 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
         </div>
         <div className='m-auto mt-1'>
           <button
-            className='text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 lg:w-60 border-1 border-[#CDA450] text-sm lg:text-base p-1 rounded-t-lg'
+            className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 lg:w-60 border-1 border-[#CDA450] text-sm lg:text-base p-1 rounded-t-lg'
             onClick={downloadImage}>
             Download Sprite
           </button>
           <button
-            className='text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 lg:w-60 border-1 border-[#CDA450] text-sm lg:text-base p-1 rounded-b-lg'
+            className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 lg:w-60 border-1 border-[#CDA450] text-sm lg:text-base p-1 rounded-b-lg'
             onClick={downloadImageUpscale}>
             Download Sprite (128x128)
           </button>

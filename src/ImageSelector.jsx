@@ -148,8 +148,8 @@ function ImageSelector() {
   }
 
   return (
-    <div className='mt-5 grid grid-cols-4 lg:grid-cols-10 gap-2'>
-      <div className='bg-[#CDA450] col-span-4 lg:col-start-4 grid grid-cols-subgrid pt-3'>
+    <div className='mt-5 grid grid-cols-4 lg:grid-cols-10 gap-0 lg:gap-2'>
+      <div className='bg-[#CDA450] col-span-4 lg:col-start-4 grid grid-cols-subgrid p-3'>
         <Combiner
           hairFront={headImages[selectedHead]?.[selectedArmy]?.hairFront}
           headFront={headImages[selectedHead]?.[selectedArmy]?.headFront}
@@ -164,11 +164,13 @@ function ImageSelector() {
           color={color}
         />
 
-        <div className='col-span-1'>
-          <label>Hair Color </label>
-          <input type='color' value={color} onChange={(e) => setColor(e.target.value)} />
+        <div className='col-span-1 bg-[#F1DCA8] rounded-lg w-full'>
+          <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
+            <label className='textShadow'>Hair Color </label>
+          </div>
+          <input className='w-full' type='color' value={color} onChange={(e) => setColor(e.target.value)} />
           <input
-            className=''
+            className='w-full text-center'
             type='text'
             value={color}
             onChange={(e) => setColor(e.target.value)} />
@@ -217,11 +219,35 @@ function ImageSelector() {
             </div>
             <label className='col-span-1'>Body</label>
           </div>
+          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
+            <div className='col-span-2 flex'>
+              <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
+              <select
+                className='max-w-65 min-w-65'>
+                <option value='none'>none</option>
+                <option>No accessories available</option>
+              </select>
+            </div>
+            <label className='col-span-1'>Accessory 1</label>
+          </div>
+          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
+            <div className='col-span-2 flex'>
+              <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
+              <select
+                className='max-w-65 min-w-65'>
+                <option value='none'>none</option>
+                <option>No accessories available</option>
+              </select>
+            </div>
+            <label className='col-span-1'>Accessory 2</label>
+          </div>
         </div>
-        <div className='col-span-1 grid grid-cols-subgrid'>
-          <label className='col-span-1'>Select Army</label>
+        <div className='col-span-1 grid grid-cols-subgrid bg-[#F1DCA8] rounded-lg w-full mt-1 h-25 lg:h-20'>
+          <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
+            <label className='col-span-1'>Select Army</label>
+          </div>
           <select
-            className='col-span-1'
+            className='col-span-1 w-30'
             onChange={(e) => setSelectedArmy(e.target.value)}>
             <option value={'blue'}>Blue</option>
             <option value={'green'}>Green</option>
@@ -231,22 +257,26 @@ function ImageSelector() {
         </div>
 
         <div className='col-span-2 col-start-3'>
-          <div>
-            <label>Head X </label>
-            <span>{headX}px</span>
-            <br/>
+          <div className='bg-[#F1DCA8] rounded-lg w-full mt-1'>
+            <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
+              <label>Head X </label>
+              <span>{headX}px</span>
+            </div>
             <input
+              className='w-full'
               type='range'
               min={-32}
               max={32}
               value={headX}
               onChange={(e) => setHeadX(parseInt(e.target.value))} />
           </div>
-          <div>
-            <label>Head Y </label>
-            <span>{headY}px</span>
-            <br/>
+          <div className='bg-[#F1DCA8] rounded-lg w-full mt-1'>
+            <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
+              <label>Head Y </label>
+              <span>{headY}px</span>
+            </div>
             <input
+              className='w-full'
               type='range'
               min={-32}
               max={32}
