@@ -175,7 +175,7 @@ function ImageSelector() {
             value={color}
             onChange={(e) => setColor(e.target.value)} />
         </div>
-        <div className='col-span-3 grid grid-cols-subgrid bg-[#F1DCA8] mt-1'>
+        <div className='col-span-3 grid grid-cols-subgrid bg-[#F1DCA8] mt-1 rounded-lg'>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
