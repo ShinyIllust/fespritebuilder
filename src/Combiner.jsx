@@ -165,7 +165,7 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
         ></canvas>
       </div>
       <div className='col-span-2'>
-        <div className='flex justify-around rounded-xl bg-[#131F42] text-[#FBEEBC]'>
+        <div className='flex justify-around rounded-xl bg-[#131F42] text-[#FBEEBC] text-sm lg:text-base'>
           <label className='m-auto'>Name:</label>
           <input
             className='max-w-30 lg:max-w-60'
