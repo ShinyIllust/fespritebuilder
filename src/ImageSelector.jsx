@@ -254,9 +254,9 @@ function ImageSelector() {
           </select>
         </div>
 
-        <div className='col-span-2 col-start-3 grid grid-cols-subgrid'>
-          <div className='bg-[#F1DCA8] rounded-lg w-full mt-1 grid grid-cols-subgrid'>
-            <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
+        <div className='col-span-2 col-start-3 grid grid-cols-subgrid gap-0'>
+          <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
+            <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
               <label className='textShadow'>Head X </label>
             </div>
             <div className='flex justify-around'>
@@ -278,8 +278,8 @@ function ImageSelector() {
               /><span className=''>px</span>
             </div>
           </div>
-          <div className='bg-[#F1DCA8] rounded-lg w-full mt-1 grid grid-cols-subgrid'>
-            <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
+          <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
+            <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
               <label className='textShadow'>Head Y </label>
             </div>
             <div className='flex justify-around'>
