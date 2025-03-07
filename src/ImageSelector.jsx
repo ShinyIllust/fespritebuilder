@@ -180,7 +180,7 @@ function ImageSelector() {
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
-                className='max-w-30 lg:max-w-65 text-sm lg:text-base'
+                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
                 onChange={(e) => setSelectedHead(e.target.value)}
                 value={selectedHead}>
                 <option value='none'>none</option>
@@ -202,7 +202,7 @@ function ImageSelector() {
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
-                className='max-w-30 lg:max-w-65 text-sm lg:text-base'
+                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
                 onChange={(e) => setSelectedBody(e.target.value)}
                 value={selectedBody}>
                 <option value='none'>none</option>
@@ -223,7 +223,7 @@ function ImageSelector() {
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
-                className='max-w-30 lg:max-w-65 text-sm lg:text-base'>
+                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'>
                 <option>No accessories available</option>
               </select>
             </div>
@@ -233,7 +233,7 @@ function ImageSelector() {
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
-                className='max-w-30 lg:max-w-65 text-sm lg:text-base'>
+                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'>
                 <option>No accessories available</option>
               </select>
             </div>
@@ -258,7 +258,7 @@ function ImageSelector() {
           <div className='bg-[#F1DCA8] rounded-lg w-full mt-1'>
             <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
               <label className='textShadow'>Head X </label>
-              <span>{headX}px</span>
+              <span className='textShadow'>{headX}px</span>
             </div>
             <input
               className='w-full'
@@ -271,7 +271,7 @@ function ImageSelector() {
           <div className='bg-[#F1DCA8] rounded-lg w-full mt-1'>
             <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
               <label className='textShadow'>Head Y </label>
-              <span>{headY}px</span>
+              <span className='textShadow'>{headY}px</span>
             </div>
             <input
               className='w-full'
