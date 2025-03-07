@@ -180,7 +180,7 @@ function ImageSelector() {
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
-                className='max-w-65'
+                className='max-w-30 lg:max-w-65 text-sm lg:text-base'
                 onChange={(e) => setSelectedHead(e.target.value)}
                 value={selectedHead}>
                 <option value='none'>none</option>
@@ -195,14 +195,14 @@ function ImageSelector() {
                 )}
               </select>
             </div>
-            <label className='col-span-1'>Head</label>
+            <label className='col-span-1 text-sm lg:text-base'>Head</label>
           </div>
 
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
-                className='max-w-65 min-w-65'
+                className='max-w-30 lg:max-w-65 text-sm lg:text-base'
                 onChange={(e) => setSelectedBody(e.target.value)}
                 value={selectedBody}>
                 <option value='none'>none</option>
@@ -217,32 +217,32 @@ function ImageSelector() {
                 )}
               </select>
             </div>
-            <label className='col-span-1'>Body</label>
+            <label className='col-span-1 text-sm lg:text-base'>Body</label>
           </div>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
-                className='max-w-65 min-w-65'>
+                className='max-w-30 lg:max-w-65 text-sm lg:text-base'>
                 <option>No accessories available</option>
               </select>
             </div>
-            <label className='col-span-1'>Accessory 1</label>
+            <label className='col-span-1 text-sm lg:text-base'>Extra 1</label>
           </div>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
-                className='max-w-65 min-w-65'>
+                className='max-w-30 lg:max-w-65 text-sm lg:text-base'>
                 <option>No accessories available</option>
               </select>
             </div>
-            <label className='col-span-1'>Accessory 2</label>
+            <label className='col-span-1 text-sm lg:text-base'>Extra 2</label>
           </div>
         </div>
         <div className='col-span-1 grid grid-cols-subgrid bg-[#F1DCA8] rounded-lg w-full mt-1 h-25 lg:h-20'>
           <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
-            <label className='col-span-1'>Select Army</label>
+            <label className='col-span-1 textShadow'>Select Army</label>
           </div>
           <select
             className='col-span-1 w-30'
@@ -257,7 +257,7 @@ function ImageSelector() {
         <div className='col-span-2 col-start-3'>
           <div className='bg-[#F1DCA8] rounded-lg w-full mt-1'>
             <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
-              <label>Head X </label>
+              <label className='textShadow'>Head X </label>
               <span>{headX}px</span>
             </div>
             <input
@@ -270,7 +270,7 @@ function ImageSelector() {
           </div>
           <div className='bg-[#F1DCA8] rounded-lg w-full mt-1'>
             <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
-              <label>Head Y </label>
+              <label className='textShadow'>Head Y </label>
               <span>{headY}px</span>
             </div>
             <input
