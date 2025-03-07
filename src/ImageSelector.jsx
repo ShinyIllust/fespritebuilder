@@ -148,86 +148,8 @@ function ImageSelector() {
   }
 
   return (
-    <div className='flex justify-center'>
-      <div>
-        <div>
-          <h1>Select Parts</h1>
-          <div>
-            <label>Select Head: </label>
-            <select onChange={(e) => setSelectedHead(e.target.value)} value={selectedHead}>
-              <option value='none'>none</option>
-              {headOptions.length > 0 ? (
-                headOptions.map((head) => (
-                  <option key={head} value={head}>
-                    {head}
-                  </option>
-                ))
-              ) : (
-                <option>No heads available</option>
-              )}
-            </select>
-          </div>
-
-          <div>
-            <label>Select Body: </label>
-            <select onChange={(e) => setSelectedBody(e.target.value)} value={selectedBody}>
-              <option value='none'>none</option>
-              {bodyOptions.length > 0 ? (
-                bodyOptions.map((body) => (
-                  <option key={body} value={body}>
-                    {body}
-                  </option>
-                ))
-              ) : (
-                <option>No bodies available</option>
-              )}
-            </select>
-          </div>
-
-          <div>
-            <label>Select Army: </label>
-            <select onChange={(e) => setSelectedArmy(e.target.value)}>
-              <option value={'blue'}>Blue</option>
-              <option value={'green'}>Green</option>
-              <option value={'red'}>Red</option>
-              <option value={'purple'}>Purple</option>
-            </select>
-          </div>
-
-          <div>
-            <div>
-              <label>Head X</label>
-              <input
-                type='range'
-                min={-32}
-                max={32}
-                value={headX}
-                onChange={(e) => setHeadX(parseInt(e.target.value))} />
-              <span>{headX}px</span>
-            </div>
-            <div>
-              <label>Head Y</label>
-              <input
-                type='range'
-                min={-32}
-                max={32}
-                value={headY}
-                onChange={(e) => setHeadY(parseInt(e.target.value))} />
-              <span>{headY}px</span>
-            </div>
-          </div>
-
-          <div>
-            <label>Hair Color: </label>
-            <input type='color' value={color} onChange={(e) => setColor(e.target.value)} />
-            <input
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              type='text'
-              value={color}
-              onChange={(e) => setColor(e.target.value)} />
-          </div>
-        </div>
-
+    <div className='mt-5 grid grid-cols-4 lg:grid-cols-10 gap-2'>
+      <div className='bg-[#CDA450] col-span-4 lg:col-start-4 grid grid-cols-subgrid pt-3'>
         <Combiner
           hairFront={headImages[selectedHead]?.[selectedArmy]?.hairFront}
           headFront={headImages[selectedHead]?.[selectedArmy]?.headFront}
@@ -241,8 +163,97 @@ function ImageSelector() {
           headY={headY}
           color={color}
         />
+
+        <div className='col-span-1'>
+          <label>Hair Color </label>
+          <input type='color' value={color} onChange={(e) => setColor(e.target.value)} />
+          <input
+            className=''
+            type='text'
+            value={color}
+            onChange={(e) => setColor(e.target.value)} />
+        </div>
+        <div className='col-span-3 grid grid-cols-subgrid bg-[#F1DCA8] mt-1'>
+          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
+            <div className='col-span-2 flex'>
+              <img className='max-w-[32px] max-h-[32px]' src='/src/assets/images/mirage.png' />
+              <select
+                className='max-w-65'
+                onChange={(e) => setSelectedHead(e.target.value)}
+                value={selectedHead}>
+                <option value='none'>none</option>
+                {headOptions.length > 0 ? (
+                  headOptions.map((head) => (
+                    <option key={head} value={head}>
+                      {head}
+                    </option>
+                  ))
+                ) : (
+                  <option>No heads available</option>
+                )}
+              </select>
+            </div>
+            <label className='col-span-1'>Head</label>
+          </div>
+
+          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
+            <div className='col-span-2 flex'>
+              <img className='max-w-[32px] max-h-[32px]' src='/src/assets/images/mirage.png' />
+              <select
+                className='max-w-65 min-w-65'
+                onChange={(e) => setSelectedBody(e.target.value)}
+                value={selectedBody}>
+                <option value='none'>none</option>
+                {bodyOptions.length > 0 ? (
+                  bodyOptions.map((body) => (
+                    <option key={body} value={body}>
+                      {body}
+                    </option>
+                  ))
+                ) : (
+                  <option>No bodies available</option>
+                )}
+              </select>
+            </div>
+            <label className='col-span-1'>Body</label>
+          </div>
+        </div>
+        <div className='col-span-1 grid grid-cols-subgrid'>
+          <label className='col-span-1'>Select Army</label>
+          <select
+            className='col-span-1'
+            onChange={(e) => setSelectedArmy(e.target.value)}>
+            <option value={'blue'}>Blue</option>
+            <option value={'green'}>Green</option>
+            <option value={'red'}>Red</option>
+            <option value={'purple'}>Purple</option>
+          </select>
+        </div>
+
+        <div className='col-span-2 col-start-3'>
+          <div>
+            <label>Head X </label>
+            <span>{headX}px</span>
+            <input
+              type='range'
+              min={-32}
+              max={32}
+              value={headX}
+              onChange={(e) => setHeadX(parseInt(e.target.value))} />
+          </div>
+          <div>
+            <label>Head Y </label>
+            <span>{headY}px</span>
+            <input
+              type='range'
+              min={-32}
+              max={32}
+              value={headY}
+              onChange={(e) => setHeadY(parseInt(e.target.value))} />
+          </div>
+        </div>
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -1,1 +1,13 @@
 @import 'tailwindcss';
+
+@font-face {
+    font-family: "ChiaroStdB";
+    src: local("ChiaroStdB"),
+      url("./fonts/FOT-ChiaroStd-B.otf") format("opentype");
+    font-weight: normal;
+  }
+:root{
+    font-family: "ChiaroStdB";
+    color: #483114;
+    background-color: #0A1D25;
+}

@@ -107,7 +107,7 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
     };
 
     const drawImages = async () => {
-      if(!hairFront && !bodyFront){
+      if (!hairFront && !bodyFront) {
         loadImages(placeholder, 0, 0);
       } else {
         await loadImages(hairBack, headX, headY);
@@ -137,7 +137,6 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
 
   const downloadImageUpscale = () => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
     const upscaledCanvas = document.createElement('canvas');
     const upscaledCtx = upscaledCanvas.getContext('2d');
     upscaledCanvas.width = 128;
@@ -155,40 +154,39 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
   const [spriteName, setSpriteName] = useState('sprite');
 
   return (
-    <>
-      <h1>Preview</h1>
-      <div>
+    <div className='col-span-3 grid grid-cols-subgrid'>
+      <div className='max-w-[70px] lg:max-w-[134px] min-w-[70px] lg:min-h-[134px] max-h-[70px] lg:max-h-[134px] min-h-[70px] lg:min-h-[134px] border-6 border-[#652200] rounded-lg col-span-1 m-auto lg:m-0'>
         <canvas
+        className='w-[64px] lg:w-[128px] h-[64px] lg:h-[128px]'
           ref={canvasRef}
           style={{
             imageRendering: 'pixelated',
-            width: '128px',
-            height: '128px',
-            border: '1px solid black',
           }}
         ></canvas>
       </div>
-      <div>
-        <h1>Export</h1>
-        <div>
-          <label>Sprite Name: </label>
-          <input 
-          className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-          type='text' 
-          value={spriteName} 
-          onChange={(e) => setSpriteName(e.target.value)} />
+      <div className='col-span-2'>
+        <div className='flex justify-around rounded-xl bg-[#131F42] text-[#FBEEBC]'>
+          <label className='m-auto'>Name:</label>
+          <input
+            className='max-w-30 lg:max-w-60'
+            type='text'
+            value={spriteName}
+            onChange={(e) => setSpriteName(e.target.value)} />
         </div>
-        <div>
-          <button className='mt-5 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded' onClick={downloadImage}>
+        <div className='m-auto mt-1'>
+          <button
+            className='text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 lg:w-60 border-1 border-[#CDA450] text-sm lg:text-base p-1 rounded-t-lg'
+            onClick={downloadImage}>
             Download Sprite
           </button>
-          <br/>
-          <button className='mt-5 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded' onClick={downloadImageUpscale}>
+          <button
+            className='text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 lg:w-60 border-1 border-[#CDA450] text-sm lg:text-base p-1 rounded-b-lg'
+            onClick={downloadImageUpscale}>
             Download Sprite (128x128)
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
