@@ -234,6 +234,7 @@ function ImageSelector() {
           <div>
             <label>Head X </label>
             <span>{headX}px</span>
+            <br/>
             <input
               type='range'
               min={-32}
@@ -244,6 +245,7 @@ function ImageSelector() {
           <div>
             <label>Head Y </label>
             <span>{headY}px</span>
+            <br/>
             <input
               type='range'
               min={-32}
