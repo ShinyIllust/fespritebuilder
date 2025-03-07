@@ -250,36 +250,56 @@ function ImageSelector() {
             <option value={'blue'}>Blue</option>
             <option value={'green'}>Green</option>
             <option value={'red'}>Red</option>
-            <option value={'purple'}>Purple</option>
+            <option value={'purple'}>Purple (Fates Only)</option>
           </select>
         </div>
 
-        <div className='col-span-2 col-start-3'>
-          <div className='bg-[#F1DCA8] rounded-lg w-full mt-1'>
+        <div className='col-span-2 col-start-3 grid grid-cols-subgrid'>
+          <div className='bg-[#F1DCA8] rounded-lg w-full mt-1 grid grid-cols-subgrid'>
             <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
               <label className='textShadow'>Head X </label>
-              <span className='textShadow'>{headX}px</span>
             </div>
-            <input
-              className='w-full'
-              type='range'
-              min={-32}
-              max={32}
-              value={headX}
-              onChange={(e) => setHeadX(parseInt(e.target.value))} />
+            <div className='flex justify-around'>
+              <button
+                className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                onClick={() => setHeadX(headX - 1)}
+              >←</button>
+              <button
+                className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                onClick={() => setHeadX(headX + 1)}
+              >→</button>
+            </div>
+            <div>
+              <input
+                className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                type='number'
+                value={headX}
+                onChange={(e) => setHeadX(parseInt(e.target.value))}
+              /><span className=''>px</span>
+            </div>
           </div>
-          <div className='bg-[#F1DCA8] rounded-lg w-full mt-1'>
+          <div className='bg-[#F1DCA8] rounded-lg w-full mt-1 grid grid-cols-subgrid'>
             <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
               <label className='textShadow'>Head Y </label>
-              <span className='textShadow'>{headY}px</span>
             </div>
-            <input
-              className='w-full'
-              type='range'
-              min={-32}
-              max={32}
-              value={headY}
-              onChange={(e) => setHeadY(parseInt(e.target.value))} />
+            <div className='flex justify-around'>
+              <button
+                className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                onClick={() => setHeadY(headY - 1)}
+              >↑</button>
+              <button
+                className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                onClick={() => setHeadY(headY + 1)}
+              >↓</button>
+            </div>
+            <div>
+              <input
+                className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                type='number'
+                value={headY}
+                onChange={(e) => setHeadY(parseInt(e.target.value))}
+              /><span className=''>px</span>
+            </div>
           </div>
         </div>
       </div>
