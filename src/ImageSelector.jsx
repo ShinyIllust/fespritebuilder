@@ -224,7 +224,6 @@ function ImageSelector() {
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
                 className='max-w-65 min-w-65'>
-                <option value='none'>none</option>
                 <option>No accessories available</option>
               </select>
             </div>
@@ -235,7 +234,6 @@ function ImageSelector() {
               <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
               <select
                 className='max-w-65 min-w-65'>
-                <option value='none'>none</option>
                 <option>No accessories available</option>
               </select>
             </div>
