@@ -111,6 +111,15 @@ const loadMaskImages = (context) => {
   return images;
 }
 
+const checkImageExists = (url) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+  });
+};
+
 function ImageSelector() {
   const [headImages, setHeadImages] = useState({});
   const [bodyImages, setBodyImages] = useState({});
@@ -142,6 +151,49 @@ function ImageSelector() {
   const [headX, setHeadX] = useState(0);
   const [headY, setHeadY] = useState(0);
   const [color, setColor] = useState('#c0c0c0');
+
+  const [headMini, setHeadMini] = useState('/assets/images/mirage.png');
+  const [bodyMini, setBodyMini] = useState('/assets/images/mirage.png');
+
+  useEffect(() => {
+    const updateHeadMini = async () => {
+      const basePath = '/assets/images/mini/head/';
+      let imagePath = `${basePath}${selectedHead}.png`;
+      let exists = await checkImageExists(imagePath);
+      if (!exists) {
+        imagePath = `${basePath}${selectedHead}_${selectedArmy}.png`;
+        exists = await checkImageExists(imagePath);
+        if (!exists) {
+          imagePath = '/assets/images/mirage.png';
+        }
+      }
+      setHeadMini(imagePath);
+    };
+    
+    if (selectedHead) {
+      updateHeadMini();
+    }
+  }, [selectedHead, selectedArmy]);
+
+  useEffect(() => {
+    const updateBodyMini = async () => {
+      const basePath = '/assets/images/mini/body/';
+      let imagePath = `${basePath}${selectedBody}.png`;
+      let exists = await checkImageExists(imagePath);
+      if (!exists) {
+        imagePath = `${basePath}${selectedBody}_${selectedArmy}.png`;
+        exists = await checkImageExists(imagePath);
+        if (!exists) {
+          imagePath = '/assets/images/mirage.png';
+        }
+      }
+      setBodyMini(imagePath);
+    };
+    
+    if (selectedBody) {
+      updateBodyMini();
+    }
+  }, [selectedBody, selectedArmy]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -178,7 +230,7 @@ function ImageSelector() {
         <div className='col-span-3 grid grid-cols-subgrid bg-[#F1DCA8] mt-1 rounded-lg'>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
-              <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
+              <img className='max-w-[32px] max-h-[32px]' src={headMini} />
               <select
                 className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
                 onChange={(e) => setSelectedHead(e.target.value)}
@@ -200,7 +252,7 @@ function ImageSelector() {
 
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
-              <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
+              <img className='max-w-[32px] max-h-[32px]' src={bodyMini} />
               <select
                 className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
                 onChange={(e) => setSelectedBody(e.target.value)}
