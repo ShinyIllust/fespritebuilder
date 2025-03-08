@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBack, maskFront, maskBack, headX, headY, color }) {
+function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBack, maskFront, maskBack, accessory, earsFront, earsBack, earsOtherFront, earsOtherBack, earsMaskFront, earsMaskBack, headX, headY, accessoryX, accessoryY, earsX, earsY, color }) {
 
   const canvasRef = useRef(null);
 
@@ -113,16 +113,23 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
         await loadImages(hairBack, headX, headY);
         await loadMasks(maskBack, headX, headY, color, ctx);
         await loadImages(headBack, headX, headY);
+        await loadImages(earsBack, earsX, earsY);
+        await loadMasks(earsMaskBack, earsX, earsY, color, ctx);
+        await loadImages(earsOtherBack, earsX, earsY);
         await loadImages(bodyBack, 0, 0);
         await loadImages(hairFront, headX, headY);
         await loadMasks(maskFront, headX, headY, color, ctx);
         await loadImages(headFront, headX, headY);
+        await loadImages(earsFront, earsX, earsY);
+        await loadMasks(earsMaskFront, earsX, earsY, color, ctx);
+        await loadImages(earsOtherFront, earsX, earsY);
+        await loadImages(accessory, accessoryX, accessoryY);
         await loadImages(bodyFront, 0, 0);
       }
     }
 
     drawImages();
-  }, [hairFront, hairBack, headFront, headBack, bodyFront, bodyBack, maskFront, maskBack, headX, headY, color]);
+  }, [hairFront, hairBack, headFront, headBack, bodyFront, bodyBack, maskFront, maskBack, accessory, earsFront, earsBack, earsOtherFront, earsOtherBack, earsMaskFront, earsMaskBack, headX, headY, accessoryX, accessoryY, earsX, earsY, color]);
 
   const downloadImage = () => {
     const canvas = canvasRef.current;

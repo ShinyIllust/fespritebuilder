@@ -106,10 +106,69 @@ const loadMaskImages = (context) => {
         images[baseName][col][type] = context[file];
       });
     }
+
   });
 
   return images;
-}
+};
+
+const loadAccessoryImages = (context) => {
+  const images = {};
+
+  Object.keys(context).forEach((file) => {
+    const baseName = file.split('/').pop().split('.png')[0];
+
+    if (!images[baseName]) {
+      images[baseName] = context[file];
+    }
+  });
+
+  return images;
+};
+
+const loadEarsImages = (context) => {
+  const images = {};
+
+  Object.keys(context).forEach((file) => {
+    const baseName = file.split('/').pop().split('_')[0];
+
+    let type = null;
+    if (file.includes('hairfront')) type = 'earsFront';
+    if (file.includes('otherfront')) type = 'earsOtherFront';
+    if (file.includes('hairback')) type = 'earsBack';
+    if (file.includes('otherback')) type = 'earsOtherBack';
+
+    if (!images[baseName]) {
+      images[baseName] = {};
+    }
+
+    images[baseName][type] = context[file];
+  });
+
+  return images;
+};
+
+const loadEarsMaskImages = (context) => {
+  const images = {};
+
+  Object.keys(context).forEach((file) => {
+    const baseName = file.split('/').pop().split('_')[0];
+
+    let type = null;
+    if (file.includes('hairfront')) type = 'earsFront';
+    if (file.includes('otherfront')) type = 'earsOtherFront';
+    if (file.includes('hairback')) type = 'earsBack';
+    if (file.includes('otherback')) type = 'earsOtherBack';
+
+    if (!images[baseName]) {
+      images[baseName] = {};
+    }
+
+    images[baseName][type] = context[file];
+  });
+
+  return images;
+};
 
 const checkImageExists = (url) => {
   return new Promise((resolve) => {
@@ -124,36 +183,61 @@ function ImageSelector() {
   const [headImages, setHeadImages] = useState({});
   const [bodyImages, setBodyImages] = useState({});
   const [maskImages, setMaskImages] = useState({});
+  const [accessoryImages, setAccesoryImages] = useState({});
+  const [earsImages, setEarsImages] = useState({});
+  const [earsMaskImages, setEarsMaskImages] = useState({});
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const headContext = import.meta.glob('./assets/images/heads/*.png', { eager: true });
     const bodyContext = import.meta.glob('./assets/images/bodies/*.png', { eager: true });
     const maskContext = import.meta.glob('./assets/images/heads/mask/*.png', { eager: true });
+    const accessoryContext = import.meta.glob('./assets/images/face/*.png', { eager: true });
+    const earsContext = import.meta.glob('./assets/images/ears/*.png', { eager: true });
+    const earsMaskContext = import.meta.glob('./assets/images/ears/mask/*.png', { eager: true });
 
     const loadedHeadImages = loadHeadImages(headContext);
     const loadedBodyImages = loadBodyImages(bodyContext);
     const loadedMaskImages = loadMaskImages(maskContext);
+    const loadedAccessoryImages = loadAccessoryImages(accessoryContext);
+    const loadedEarsImages = loadEarsImages(earsContext);
+    const loadedEarsMaskImages = loadEarsMaskImages(earsMaskContext);
 
     setHeadImages(loadedHeadImages);
     setBodyImages(loadedBodyImages);
     setMaskImages(loadedMaskImages);
+    setAccesoryImages(loadedAccessoryImages);
+    setEarsImages(loadedEarsImages);
+    setEarsMaskImages(loadedEarsMaskImages);
 
     setLoading(false);
   }, []);
 
   const headOptions = Object.keys(headImages);
   const bodyOptions = Object.keys(bodyImages);
+  const accessoryOptions = Object.keys(accessoryImages);
+  const earsOptions = Object.keys(earsImages);
 
-  const [selectedHead, setSelectedHead] = useState(headOptions.length ? headOptions[0] : '');
-  const [selectedBody, setSelectedBody] = useState(bodyOptions.length ? bodyOptions[0] : '');
+  const [selectedHead, setSelectedHead] = useState(headOptions.length ? headOptions[0] : 'none');
+  const [selectedBody, setSelectedBody] = useState(bodyOptions.length ? bodyOptions[0] : 'none');
   const [selectedArmy, setSelectedArmy] = useState('blue');
+  const [selectedAccessory, setSelectedAccessory] = useState(accessoryOptions.length ? accessoryOptions[0] : 'none');
+  const [selectedEars, setSelectedEars] = useState(earsOptions.length ? earsOptions[0] : 'none');
+
   const [headX, setHeadX] = useState(0);
   const [headY, setHeadY] = useState(0);
+  const [accessoryX, setAccessoryX] = useState(0);
+  const [accessoryY, setAccessoryY] = useState(0);
+  const [earsX, setEarsX] = useState(0);
+  const [earsY, setEarsY] = useState(0);
+
   const [color, setColor] = useState('#c0c0c0');
 
   const [headMini, setHeadMini] = useState('/assets/images/mirage.png');
   const [bodyMini, setBodyMini] = useState('/assets/images/mirage.png');
+  const [accessoryMini, setAccessoryMini] = useState('/assets/images/mirage.png');
+  const [earsMini, setEarsMini] = useState('/assets/images/mirage.png');
 
   useEffect(() => {
     const updateHeadMini = async () => {
@@ -169,7 +253,7 @@ function ImageSelector() {
       }
       setHeadMini(imagePath);
     };
-    
+
     if (selectedHead) {
       updateHeadMini();
     }
@@ -189,11 +273,51 @@ function ImageSelector() {
       }
       setBodyMini(imagePath);
     };
-    
+
     if (selectedBody) {
       updateBodyMini();
     }
   }, [selectedBody, selectedArmy]);
+
+  useEffect(() => {
+    const updateAccessoryMini = async () => {
+      const basePath = '/assets/images/mini/face/';
+      let imagePath = `${basePath}${selectedAccessory}.png`;
+      let exists = await checkImageExists(imagePath);
+      if (!exists) {
+        imagePath = `${basePath}${selectedAccessory}_${selectedArmy}.png`;
+        exists = await checkImageExists(imagePath);
+        if (!exists) {
+          imagePath = '/assets/images/mirage.png';
+        }
+      }
+      setAccessoryMini(imagePath);
+    };
+
+    if (selectedAccessory) {
+      updateAccessoryMini();
+    }
+  }, [selectedAccessory, selectedArmy]);
+
+  useEffect(() => {
+    const updateEarsMini = async () => {
+      const basePath = '/assets/images/mini/ears/';
+      let imagePath = `${basePath}${selectedEars}.png`;
+      let exists = await checkImageExists(imagePath);
+      if (!exists) {
+        imagePath = `${basePath}${selectedEars}_${selectedArmy}.png`;
+        exists = await checkImageExists(imagePath);
+        if (!exists) {
+          imagePath = '/assets/images/mirage.png';
+        }
+      }
+      setEarsMini(imagePath);
+    };
+
+    if (selectedEars) {
+      updateEarsMini();
+    }
+  }, [selectedEars, selectedArmy]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -211,8 +335,19 @@ function ImageSelector() {
           bodyBack={bodyImages[selectedBody]?.[selectedArmy]?.back}
           maskFront={maskImages[selectedHead]?.[selectedArmy]?.hairFront}
           maskBack={maskImages[selectedHead]?.[selectedArmy]?.hairBack}
+          accessory={accessoryImages[selectedAccessory]}
+          earsFront={earsImages[selectedEars]?.earsFront}
+          earsBack={earsImages[selectedEars]?.earsBack}
+          earsOtherFront={earsImages[selectedEars]?.earsOtherFront}
+          earsOtherBack={earsImages[selectedEars]?.earsOtherBack}
+          earsMaskFront={earsMaskImages[selectedEars]?.earsFront}
+          earsMaskback={earsMaskImages[selectedEars]?.earsBack}
           headX={headX}
           headY={headY}
+          accessoryX={accessoryX}
+          accessoryY={accessoryY}
+          earsX={earsX}
+          earsY={earsY}
           color={color}
         />
 
@@ -230,7 +365,13 @@ function ImageSelector() {
         <div className='col-span-3 grid grid-cols-subgrid bg-[#F1DCA8] mt-1 rounded-lg'>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
-              <img className='max-w-[32px] max-h-[32px]' src={headMini} />
+              <img
+                className='max-w-[32px] max-h-[32px]'
+                src={headMini}
+                style={{
+                  imageRendering: 'pixelated',
+                }}
+              />
               <select
                 className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
                 onChange={(e) => setSelectedHead(e.target.value)}
@@ -252,7 +393,13 @@ function ImageSelector() {
 
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
-              <img className='max-w-[32px] max-h-[32px]' src={bodyMini} />
+              <img
+                className='max-w-[32px] max-h-[32px]'
+                src={bodyMini}
+                style={{
+                  imageRendering: 'pixelated',
+                }}
+              />
               <select
                 className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
                 onChange={(e) => setSelectedBody(e.target.value)}
@@ -273,23 +420,67 @@ function ImageSelector() {
           </div>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
-              <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
+              <img className='max-w-[32px] max-h-[32px]' src={accessoryMini} />
               <select
-                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'>
-                <option>No accessories available</option>
+                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
+                onChange={(e) => setSelectedAccessory(e.target.value)}
+                value={selectedAccessory}>
+                <option value='none'>none</option>
+                {accessoryOptions.length > 0 ? (
+                  accessoryOptions.map((accessory) => (
+                    <option key={accessory} value={accessory}>
+                      {accessory}
+                    </option>
+                  ))
+                ) : (
+                  <option>No accessories available</option>
+                )}
               </select>
             </div>
-            <label className='col-span-1 text-sm lg:text-base'>Extra 1</label>
+            <label className='col-span-1 text-sm lg:text-base'>Extra</label>
           </div>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
-              <img className='max-w-[32px] max-h-[32px]' src='/assets/images/mirage.png' />
+              <img
+                className='max-w-[32px] max-h-[32px]'
+                src={earsMini}
+                style={{
+                  imageRendering: 'pixelated',
+                }}
+              />
               <select
-                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'>
-                <option>No accessories available</option>
+                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
+                onChange={(e) => setSelectedEars(e.target.value)}
+                value={selectedEars}>
+                <option value='none'>none</option>
+                {earsOptions.length > 0 ? (
+                  earsOptions.map((ears) => (
+                    <option key={ears} value={ears}>
+                      {ears}
+                    </option>
+                  ))
+                ) : (
+                  <option>No ears available</option>
+                )}
               </select>
             </div>
-            <label className='col-span-1 text-sm lg:text-base'>Extra 2</label>
+            <label className='col-span-1 text-sm lg:text-base'>Ears</label>
+          </div>
+          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
+            <div className='col-span-2 flex'>
+              <img
+                className='max-w-[32px] max-h-[32px]'
+                src='/assets/images/mirage.png'
+                style={{
+                  imageRendering: 'pixelated',
+                }}
+              />
+              <select
+                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'>
+                <option>No facial hair available</option>
+              </select>
+            </div>
+            <label className='col-span-1 text-sm lg:text-base'>Facial Hair</label>
           </div>
         </div>
         <div className='col-span-1 grid grid-cols-subgrid bg-[#F1DCA8] rounded-lg w-full mt-1 h-25 lg:h-20'>
@@ -306,54 +497,209 @@ function ImageSelector() {
           </select>
         </div>
 
-        <div className='col-span-2 col-start-3 grid grid-cols-subgrid gap-0'>
-          <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
-            <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
-              <label className='textShadow'>Head X </label>
+        {selectedHead != 'none' && (
+          <div className='col-span-2 grid grid-cols-subgrid gap-0'>
+            <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
+              <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
+                <label className='textShadow'>Head X </label>
+              </div>
+              <div className='flex justify-around'>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setHeadX(headX - 1)}
+                >←</button>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setHeadX(headX + 1)}
+                >→</button>
+              </div>
+              <div>
+                <input
+                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  type='number'
+                  value={headX}
+                  onChange={(e) => setHeadX(parseInt(e.target.value))}
+                /><span className=''>px</span>
+              </div>
             </div>
-            <div className='flex justify-around'>
-              <button
-                className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                onClick={() => setHeadX(headX - 1)}
-              >←</button>
-              <button
-                className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                onClick={() => setHeadX(headX + 1)}
-              >→</button>
-            </div>
-            <div>
-              <input
-                className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                type='number'
-                value={headX}
-                onChange={(e) => setHeadX(parseInt(e.target.value))}
-              /><span className=''>px</span>
+            <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
+              <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
+                <label className='textShadow'>Head Y </label>
+              </div>
+              <div className='flex justify-around'>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setHeadY(headY - 1)}
+                >↑</button>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setHeadY(headY + 1)}
+                >↓</button>
+              </div>
+              <div>
+                <input
+                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  type='number'
+                  value={headY}
+                  onChange={(e) => setHeadY(parseInt(e.target.value))}
+                /><span className=''>px</span>
+              </div>
             </div>
           </div>
-          <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
-            <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
-              <label className='textShadow'>Head Y </label>
+        )}
+
+        {selectedAccessory != 'none' && (
+          <div className='col-span-2 grid grid-cols-subgrid gap-0'>
+            <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
+              <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
+                <label className='textShadow'>Extra X </label>
+              </div>
+              <div className='flex justify-around'>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setAccessoryX(accessoryX - 1)}
+                >←</button>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setAccessoryX(accessoryX + 1)}
+                >→</button>
+              </div>
+              <div>
+                <input
+                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  type='number'
+                  value={accessoryX}
+                  onChange={(e) => setAccessoryX(parseInt(e.target.value))}
+                /><span className=''>px</span>
+              </div>
             </div>
-            <div className='flex justify-around'>
-              <button
-                className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                onClick={() => setHeadY(headY - 1)}
-              >↑</button>
-              <button
-                className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                onClick={() => setHeadY(headY + 1)}
-              >↓</button>
-            </div>
-            <div>
-              <input
-                className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                type='number'
-                value={headY}
-                onChange={(e) => setHeadY(parseInt(e.target.value))}
-              /><span className=''>px</span>
+            <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
+              <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
+                <label className='textShadow'>Extra Y </label>
+              </div>
+              <div className='flex justify-around'>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setAccessoryY(accessoryY - 1)}
+                >↑</button>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setAccessoryY(accessoryY + 1)}
+                >↓</button>
+              </div>
+              <div>
+                <input
+                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  type='number'
+                  value={accessoryY}
+                  onChange={(e) => setAccessoryY(parseInt(e.target.value))}
+                /><span className=''>px</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {selectedEars != 'none' && (
+          <div className='col-span-2 grid grid-cols-subgrid gap-0'>
+            <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
+              <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
+                <label className='textShadow'>Ears X </label>
+              </div>
+              <div className='flex justify-around'>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setEarsX(earsX - 1)}
+                >←</button>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setEarsX(earsX + 1)}
+                >→</button>
+              </div>
+              <div>
+                <input
+                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  type='number'
+                  value={earsX}
+                  onChange={(e) => setEarsX(parseInt(e.target.value))}
+                /><span className=''>px</span>
+              </div>
+            </div>
+            <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
+              <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
+                <label className='textShadow'>Ears Y </label>
+              </div>
+              <div className='flex justify-around'>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setEarsY(earsY - 1)}
+                >↑</button>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setEarsY(earsY + 1)}
+                >↓</button>
+              </div>
+              <div>
+                <input
+                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  type='number'
+                  value={earsY}
+                  onChange={(e) => setEarsY(parseInt(e.target.value))}
+                /><span className=''>px</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* {selectedAccessory != 'none' && (
+          <div className='col-span-2 grid grid-cols-subgrid gap-0'>
+            <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
+              <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
+                <label className='textShadow'>Extra X </label>
+              </div>
+              <div className='flex justify-around'>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setAccessoryX(accessoryX - 1)}
+                >←</button>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setAccessoryX(accessoryX + 1)}
+                >→</button>
+              </div>
+              <div>
+                <input
+                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  type='number'
+                  value={accessoryX}
+                  onChange={(e) => setAccessoryX(parseInt(e.target.value))}
+                /><span className=''>px</span>
+              </div>
+            </div>
+            <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
+              <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
+                <label className='textShadow'>Extra Y </label>
+              </div>
+              <div className='flex justify-around'>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setAccessoryY(accessoryY - 1)}
+                >↑</button>
+                <button
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  onClick={() => setAccessoryY(accessoryY + 1)}
+                >↓</button>
+              </div>
+              <div>
+                <input
+                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  type='number'
+                  value={accessoryY}
+                  onChange={(e) => setAccessoryY(parseInt(e.target.value))}
+                /><span className=''>px</span>
+              </div>
+            </div>
+          </div>
+        )} */}
       </div>
     </div >
   );
