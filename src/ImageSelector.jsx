@@ -386,7 +386,7 @@ function ImageSelector() {
 
   return (
     <div className='mt-5 grid grid-cols-4 lg:grid-cols-10 gap-0 lg:gap-2 text-sm lg:text-base'>
-      <div className='bg-[#CDA450] col-span-4 lg:col-start-4 grid grid-cols-subgrid p-3'>
+      <div className='bg-[#CDA450] col-span-4 lg:col-start-4 grid grid-cols-subgrid p-0 lg:p-3'>
         <Combiner
           hairFront={headImages[selectedHead]?.[selectedArmy]?.hairFront}
           headFront={headImages[selectedHead]?.[selectedArmy]?.headFront}
