@@ -170,6 +170,34 @@ const loadEarsMaskImages = (context) => {
   return images;
 };
 
+const loadFacialHairImages = (context) => {
+  const images = {};
+
+  Object.keys(context).forEach((file) => {
+    const baseName = file.split('/').pop().split('.png')[0];
+
+    if (!images[baseName]) {
+      images[baseName] = context[file];
+    }
+  });
+
+  return images;
+};
+
+const loadFacialHairMaskImages = (context) => {
+  const images = {};
+
+  Object.keys(context).forEach((file) => {
+    const baseName = file.split('/').pop().split('.png')[0];
+
+    if (!images[baseName]) {
+      images[baseName] = context[file];
+    }
+  });
+
+  return images;
+};
+
 const checkImageExists = (url) => {
   return new Promise((resolve) => {
     const img = new Image();
@@ -186,6 +214,8 @@ function ImageSelector() {
   const [accessoryImages, setAccesoryImages] = useState({});
   const [earsImages, setEarsImages] = useState({});
   const [earsMaskImages, setEarsMaskImages] = useState({});
+  const [facialHairImages, setFacialHairImages] = useState({});
+  const [facialHairMaskImages, setFacialHairMaskImages] = useState({});
 
   const [loading, setLoading] = useState(true);
 
@@ -196,6 +226,8 @@ function ImageSelector() {
     const accessoryContext = import.meta.glob('./assets/images/face/*.png', { eager: true });
     const earsContext = import.meta.glob('./assets/images/ears/*.png', { eager: true });
     const earsMaskContext = import.meta.glob('./assets/images/ears/mask/*.png', { eager: true });
+    const facialHairContext = import.meta.glob('./assets/images/facialhair/*.png', { eager: true });
+    const facialHairMaskContext = import.meta.glob('./assets/images/facialhair/mask/*.png', { eager: true });
 
     const loadedHeadImages = loadHeadImages(headContext);
     const loadedBodyImages = loadBodyImages(bodyContext);
@@ -203,6 +235,8 @@ function ImageSelector() {
     const loadedAccessoryImages = loadAccessoryImages(accessoryContext);
     const loadedEarsImages = loadEarsImages(earsContext);
     const loadedEarsMaskImages = loadEarsMaskImages(earsMaskContext);
+    const loadedFacialHairImages = loadFacialHairImages(facialHairContext);
+    const loadedFacialHairMaskImages = loadFacialHairMaskImages(facialHairMaskContext);
 
     setHeadImages(loadedHeadImages);
     setBodyImages(loadedBodyImages);
@@ -210,6 +244,8 @@ function ImageSelector() {
     setAccesoryImages(loadedAccessoryImages);
     setEarsImages(loadedEarsImages);
     setEarsMaskImages(loadedEarsMaskImages);
+    setFacialHairImages(loadedFacialHairImages);
+    setFacialHairMaskImages(loadedFacialHairMaskImages);
 
     setLoading(false);
   }, []);
@@ -218,12 +254,14 @@ function ImageSelector() {
   const bodyOptions = Object.keys(bodyImages);
   const accessoryOptions = Object.keys(accessoryImages);
   const earsOptions = Object.keys(earsImages);
+  const facialHairOptions = Object.keys(facialHairImages);
 
   const [selectedHead, setSelectedHead] = useState(headOptions.length ? headOptions[0] : 'none');
   const [selectedBody, setSelectedBody] = useState(bodyOptions.length ? bodyOptions[0] : 'none');
   const [selectedArmy, setSelectedArmy] = useState('blue');
   const [selectedAccessory, setSelectedAccessory] = useState(accessoryOptions.length ? accessoryOptions[0] : 'none');
   const [selectedEars, setSelectedEars] = useState(earsOptions.length ? earsOptions[0] : 'none');
+  const [selectedFacialHair, setSelectedFacialHair] = useState(facialHairOptions.length ? facialHairOptions[0] : 'none');
 
   const [headX, setHeadX] = useState(0);
   const [headY, setHeadY] = useState(0);
@@ -231,6 +269,8 @@ function ImageSelector() {
   const [accessoryY, setAccessoryY] = useState(0);
   const [earsX, setEarsX] = useState(0);
   const [earsY, setEarsY] = useState(0);
+  const [facialHairX, setFacialHairX] = useState(0);
+  const [facialHairY, setFacialHairY] = useState(0);
 
   const [color, setColor] = useState('#c0c0c0');
 
@@ -238,6 +278,7 @@ function ImageSelector() {
   const [bodyMini, setBodyMini] = useState('/assets/images/mirage.png');
   const [accessoryMini, setAccessoryMini] = useState('/assets/images/mirage.png');
   const [earsMini, setEarsMini] = useState('/assets/images/mirage.png');
+  const [facialHairMini, setFacialHairMini] = useState('/assets/images/mirage.png');
 
   useEffect(() => {
     const updateHeadMini = async () => {
@@ -319,6 +360,26 @@ function ImageSelector() {
     }
   }, [selectedEars, selectedArmy]);
 
+  useEffect(() => {
+    const updateFacialHairMini = async () => {
+      const basePath = '/assets/images/mini/facialhair/';
+      let imagePath = `${basePath}${selectedFacialHair}.png`;
+      let exists = await checkImageExists(imagePath);
+      if (!exists) {
+        imagePath = `${basePath}${selectedFacialHair}_${selectedArmy}.png`;
+        exists = await checkImageExists(imagePath);
+        if (!exists) {
+          imagePath = '/assets/images/mirage.png';
+        }
+      }
+      setFacialHairMini(imagePath);
+    };
+
+    if (selectedFacialHair) {
+      updateFacialHairMini();
+    }
+  }, [selectedFacialHair, selectedArmy]);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -342,12 +403,16 @@ function ImageSelector() {
           earsOtherBack={earsImages[selectedEars]?.earsOtherBack}
           earsMaskFront={earsMaskImages[selectedEars]?.earsFront}
           earsMaskback={earsMaskImages[selectedEars]?.earsBack}
+          facialHair={facialHairImages[selectedFacialHair]}
+          facialHairMask={facialHairMaskImages[selectedFacialHair]}
           headX={headX}
           headY={headY}
           accessoryX={accessoryX}
           accessoryY={accessoryY}
           earsX={earsX}
           earsY={earsY}
+          facialHairX={facialHairX}
+          facialHairY={facialHairY}
           color={color}
         />
 
@@ -470,19 +535,31 @@ function ImageSelector() {
             <div className='col-span-2 flex'>
               <img
                 className='max-w-[32px] max-h-[32px]'
-                src='/assets/images/mirage.png'
+                src={facialHairMini}
                 style={{
                   imageRendering: 'pixelated',
                 }}
               />
               <select
-                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'>
-                <option>No facial hair available</option>
+                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
+                onChange={(e) => setSelectedFacialHair(e.target.value)}
+                value={selectedFacialHair}>
+                <option value='none'>none</option>
+                {facialHairOptions.length > 0 ? (
+                  facialHairOptions.map((facialHair) => (
+                    <option key={facialHair} value={facialHair}>
+                      {facialHair}
+                    </option>
+                  ))
+                ) : (
+                  <option>No facial hair available</option>
+                )}
               </select>
             </div>
             <label className='col-span-1 text-sm lg:text-base'>Facial Hair</label>
           </div>
         </div>
+
         <div className='col-span-1 grid grid-cols-subgrid bg-[#F1DCA8] rounded-lg w-full mt-1 h-25 lg:h-20'>
           <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
             <label className='col-span-1 textShadow'>Select Army</label>
@@ -650,56 +727,56 @@ function ImageSelector() {
           </div>
         )}
 
-        {/* {selectedAccessory != 'none' && (
+        {selectedFacialHair != 'none' && (
           <div className='col-span-2 grid grid-cols-subgrid gap-0'>
             <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
               <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Extra X </label>
+                <label className='textShadow'>Facial Hair X </label>
               </div>
               <div className='flex justify-around'>
                 <button
                   className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setAccessoryX(accessoryX - 1)}
+                  onClick={() => setFacialHairX(facialHairX - 1)}
                 >←</button>
                 <button
                   className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setAccessoryX(accessoryX + 1)}
+                  onClick={() => setFacialHairX(facialHairX + 1)}
                 >→</button>
               </div>
               <div>
                 <input
                   className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
-                  value={accessoryX}
-                  onChange={(e) => setAccessoryX(parseInt(e.target.value))}
+                  value={facialHairX}
+                  onChange={(e) => setFacialHairX(parseInt(e.target.value))}
                 /><span className=''>px</span>
               </div>
             </div>
             <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
               <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Extra Y </label>
+                <label className='textShadow'>Facial Hair Y </label>
               </div>
               <div className='flex justify-around'>
                 <button
                   className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setAccessoryY(accessoryY - 1)}
+                  onClick={() => setFacialHairY(facialHairY - 1)}
                 >↑</button>
                 <button
                   className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setAccessoryY(accessoryY + 1)}
+                  onClick={() => setFacialHairY(facialHairY + 1)}
                 >↓</button>
               </div>
               <div>
                 <input
                   className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
-                  value={accessoryY}
-                  onChange={(e) => setAccessoryY(parseInt(e.target.value))}
+                  value={facialHairY}
+                  onChange={(e) => setFacialHairY(parseInt(e.target.value))}
                 /><span className=''>px</span>
               </div>
             </div>
           </div>
-        )} */}
+        )}
       </div>
     </div >
   );

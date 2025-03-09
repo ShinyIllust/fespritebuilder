@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBack, maskFront, maskBack, accessory, earsFront, earsBack, earsOtherFront, earsOtherBack, earsMaskFront, earsMaskBack, headX, headY, accessoryX, accessoryY, earsX, earsY, color }) {
+function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBack, maskFront, maskBack, accessory, earsFront, earsBack, earsOtherFront, earsOtherBack, earsMaskFront, earsMaskBack, facialHair, facialHairMask, headX, headY, accessoryX, accessoryY, earsX, earsY, facialHairX, facialHairY, color }) {
 
   const canvasRef = useRef(null);
 
@@ -107,7 +107,7 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
     };
 
     const drawImages = async () => {
-      if (!hairFront && !bodyFront) {
+      if (!hairFront && !bodyFront && !earsFront && !accessory && !facialHair) {
         loadImages(placeholder, 0, 0);
       } else {
         await loadImages(hairBack, headX, headY);
@@ -120,6 +120,8 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
         await loadImages(hairFront, headX, headY);
         await loadMasks(maskFront, headX, headY, color, ctx);
         await loadImages(headFront, headX, headY);
+        await loadImages(facialHair, facialHairX, facialHairY);
+        await loadMasks(facialHairMask, facialHairX, facialHairY, color, ctx);
         await loadImages(earsFront, earsX, earsY);
         await loadMasks(earsMaskFront, earsX, earsY, color, ctx);
         await loadImages(earsOtherFront, earsX, earsY);
@@ -129,7 +131,7 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
     }
 
     drawImages();
-  }, [hairFront, hairBack, headFront, headBack, bodyFront, bodyBack, maskFront, maskBack, accessory, earsFront, earsBack, earsOtherFront, earsOtherBack, earsMaskFront, earsMaskBack, headX, headY, accessoryX, accessoryY, earsX, earsY, color]);
+  }, [hairFront, hairBack, headFront, headBack, bodyFront, bodyBack, maskFront, maskBack, accessory, earsFront, earsBack, earsOtherFront, earsOtherBack, earsMaskFront, earsMaskBack, facialHair, facialHairMask, headX, headY, accessoryX, accessoryY, earsX, earsY, facialHairX, facialHairY, color]);
 
   const downloadImage = () => {
     const canvas = canvasRef.current;
