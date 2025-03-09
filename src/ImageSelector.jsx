@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Combiner from './Combiner';
+import Footer from './Footer.jsx'
 
 const loadHeadImages = (context) => {
   const images = {};
@@ -777,6 +778,7 @@ function ImageSelector() {
             </div>
           </div>
         )}
+        <Footer />
       </div>
     </div >
   );
