@@ -164,9 +164,9 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
 
   return (
     <div className='col-span-3 grid grid-cols-subgrid'>
-      <div className='max-w-[70px] lg:max-w-[134px] min-w-[70px] lg:min-h-[134px] max-h-[70px] lg:max-h-[134px] min-h-[70px] lg:min-h-[134px] border-6 border-[#652200] rounded-lg col-span-1 m-auto lg:m-0'>
+      <div className='max-w-[70px] md:max-w-[134px] min-w-[70px] md:min-h-[134px] max-h-[70px] md:max-h-[134px] min-h-[70px] md:min-h-[134px] border-6 border-[#652200] rounded-lg col-span-1 m-auto md:m-0'>
         <canvas
-        className='w-[64px] lg:w-[128px] h-[64px] lg:h-[128px]'
+        className='w-[64px] md:w-[128px] h-[64px] md:h-[128px]'
           ref={canvasRef}
           style={{
             imageRendering: 'pixelated',
@@ -174,22 +174,22 @@ function Combiner({ hairFront, headFront, hairBack, headBack, bodyFront, bodyBac
         ></canvas>
       </div>
       <div className='col-span-2'>
-        <div className='flex justify-around rounded-xl bg-[#131F42] text-[#FBEEBC] text-sm lg:text-base'>
+        <div className='flex justify-around rounded-xl bg-[#131F42] text-[#FBEEBC] text-sm md:text-base'>
           <label className='m-auto'>Name:</label>
           <input
-            className='max-w-30 lg:max-w-60'
+            className='max-w-30 md:max-w-60'
             type='text'
             value={spriteName}
             onChange={(e) => setSpriteName(e.target.value)} />
         </div>
         <div className='m-auto mt-1'>
           <button
-            className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 lg:w-60 border-1 border-[#CDA450] text-sm lg:text-base p-1 rounded-t-lg'
+            className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 md:w-60 border-1 border-[#CDA450] text-sm md:text-base p-1 rounded-t-lg'
             onClick={downloadImage}>
             Download Sprite
           </button>
           <button
-            className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 lg:w-60 border-1 border-[#CDA450] text-sm lg:text-base p-1 rounded-b-lg'
+            className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer w-40 md:w-60 border-1 border-[#CDA450] text-sm md:text-base p-1 rounded-b-lg'
             onClick={downloadImageUpscale}>
             Download Sprite (128x128)
           </button>

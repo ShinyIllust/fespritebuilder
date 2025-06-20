@@ -386,8 +386,8 @@ function ImageSelector() {
   }
 
   return (
-    <div className='mt-5 grid grid-cols-4 lg:grid-cols-10 gap-0 lg:gap-2 text-sm lg:text-base'>
-      <div className='bg-[#CDA450] col-span-4 lg:col-start-4 grid grid-cols-subgrid p-0 lg:p-3'>
+    <div className='mt-5 grid grid-cols-4 md:grid-cols-10 gap-0 md:gap-2 text-sm md:text-base'>
+      <div className='bg-[#CDA450] col-span-4 md:col-start-4 grid grid-cols-subgrid p-0 md:p-3'>
         <Combiner
           hairFront={headImages[selectedHead]?.[selectedArmy]?.hairFront}
           headFront={headImages[selectedHead]?.[selectedArmy]?.headFront}
@@ -439,7 +439,7 @@ function ImageSelector() {
                 }}
               />
               <select
-                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
+                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
                 onChange={(e) => setSelectedHead(e.target.value)}
                 value={selectedHead}>
                 <option value='none'>none</option>
@@ -454,7 +454,7 @@ function ImageSelector() {
                 )}
               </select>
             </div>
-            <label className='col-span-1 text-sm lg:text-base'>Head</label>
+            <label className='col-span-1 text-sm md:text-base'>Head</label>
           </div>
 
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
@@ -467,7 +467,7 @@ function ImageSelector() {
                 }}
               />
               <select
-                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
+                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
                 onChange={(e) => setSelectedBody(e.target.value)}
                 value={selectedBody}>
                 <option value='none'>none</option>
@@ -482,13 +482,13 @@ function ImageSelector() {
                 )}
               </select>
             </div>
-            <label className='col-span-1 text-sm lg:text-base'>Body</label>
+            <label className='col-span-1 text-sm md:text-base'>Body</label>
           </div>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
               <img className='max-w-[32px] max-h-[32px]' src={accessoryMini} />
               <select
-                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
+                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
                 onChange={(e) => setSelectedAccessory(e.target.value)}
                 value={selectedAccessory}>
                 <option value='none'>none</option>
@@ -503,7 +503,7 @@ function ImageSelector() {
                 )}
               </select>
             </div>
-            <label className='col-span-1 text-sm lg:text-base'>Extra</label>
+            <label className='col-span-1 text-sm md:text-base'>Extra</label>
           </div>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
@@ -515,7 +515,7 @@ function ImageSelector() {
                 }}
               />
               <select
-                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
+                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
                 onChange={(e) => setSelectedEars(e.target.value)}
                 value={selectedEars}>
                 <option value='none'>none</option>
@@ -530,7 +530,7 @@ function ImageSelector() {
                 )}
               </select>
             </div>
-            <label className='col-span-1 text-sm lg:text-base'>Ears</label>
+            <label className='col-span-1 text-sm md:text-base'>Ears</label>
           </div>
           <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
             <div className='col-span-2 flex'>
@@ -542,7 +542,7 @@ function ImageSelector() {
                 }}
               />
               <select
-                className='max-w-30 min-w-30 lg:min-w-85 lg:max-w-85 text-sm lg:text-base'
+                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
                 onChange={(e) => setSelectedFacialHair(e.target.value)}
                 value={selectedFacialHair}>
                 <option value='none'>none</option>
@@ -557,16 +557,16 @@ function ImageSelector() {
                 )}
               </select>
             </div>
-            <label className='col-span-1 text-sm lg:text-base'>Facial Hair</label>
+            <label className='col-span-1 text-sm md:text-base'>Facial Hair</label>
           </div>
         </div>
 
-        <div className='col-span-1 grid grid-cols-subgrid bg-[#F1DCA8] rounded-lg w-full mt-1 h-25 lg:h-20'>
+        <div className='col-span-1 grid grid-cols-subgrid bg-[#F1DCA8] rounded-lg w-full mt-1 h-25 md:h-20'>
           <div className='bg-[#402C0E] p-1 w-full rounded-t-lg text-[#EBA92C] text-center'>
             <label className='col-span-1 textShadow'>Select Army</label>
           </div>
           <select
-            className='col-span-1 w-20 lg:w-40'
+            className='col-span-1 w-20 md:w-40'
             onChange={(e) => setSelectedArmy(e.target.value)}>
             <option value={'blue'}>Blue</option>
             <option value={'green'}>Green</option>
@@ -583,17 +583,17 @@ function ImageSelector() {
               </div>
               <div className='flex justify-around'>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setHeadX(headX - 1)}
                 >←</button>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setHeadX(headX + 1)}
                 >→</button>
               </div>
               <div>
                 <input
-                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
                   value={headX}
                   onChange={(e) => setHeadX(parseInt(e.target.value))}
@@ -606,17 +606,17 @@ function ImageSelector() {
               </div>
               <div className='flex justify-around'>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setHeadY(headY - 1)}
                 >↑</button>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setHeadY(headY + 1)}
                 >↓</button>
               </div>
               <div>
                 <input
-                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
                   value={headY}
                   onChange={(e) => setHeadY(parseInt(e.target.value))}
@@ -634,17 +634,17 @@ function ImageSelector() {
               </div>
               <div className='flex justify-around'>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setAccessoryX(accessoryX - 1)}
                 >←</button>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setAccessoryX(accessoryX + 1)}
                 >→</button>
               </div>
               <div>
                 <input
-                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
                   value={accessoryX}
                   onChange={(e) => setAccessoryX(parseInt(e.target.value))}
@@ -657,17 +657,17 @@ function ImageSelector() {
               </div>
               <div className='flex justify-around'>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setAccessoryY(accessoryY - 1)}
                 >↑</button>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setAccessoryY(accessoryY + 1)}
                 >↓</button>
               </div>
               <div>
                 <input
-                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
                   value={accessoryY}
                   onChange={(e) => setAccessoryY(parseInt(e.target.value))}
@@ -685,17 +685,17 @@ function ImageSelector() {
               </div>
               <div className='flex justify-around'>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setEarsX(earsX - 1)}
                 >←</button>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setEarsX(earsX + 1)}
                 >→</button>
               </div>
               <div>
                 <input
-                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
                   value={earsX}
                   onChange={(e) => setEarsX(parseInt(e.target.value))}
@@ -708,17 +708,17 @@ function ImageSelector() {
               </div>
               <div className='flex justify-around'>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setEarsY(earsY - 1)}
                 >↑</button>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setEarsY(earsY + 1)}
                 >↓</button>
               </div>
               <div>
                 <input
-                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
                   value={earsY}
                   onChange={(e) => setEarsY(parseInt(e.target.value))}
@@ -736,17 +736,17 @@ function ImageSelector() {
               </div>
               <div className='flex justify-around'>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setFacialHairX(facialHairX - 1)}
                 >←</button>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setFacialHairX(facialHairX + 1)}
                 >→</button>
               </div>
               <div>
                 <input
-                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
                   value={facialHairX}
                   onChange={(e) => setFacialHairX(parseInt(e.target.value))}
@@ -759,17 +759,17 @@ function ImageSelector() {
               </div>
               <div className='flex justify-around'>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setFacialHairY(facialHairY - 1)}
                 >↑</button>
                 <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm lg:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
+                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
                   onClick={() => setFacialHairY(facialHairY + 1)}
                 >↓</button>
               </div>
               <div>
                 <input
-                  className='w-6 lg:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                   type='number'
                   value={facialHairY}
                   onChange={(e) => setFacialHairY(parseInt(e.target.value))}
