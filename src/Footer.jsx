@@ -2,7 +2,7 @@ function Footer(){
     return (
         <div className="col-span-4 grid grid-cols-subgrid mt-10">
             <div className="col-span-2">
-                <p>Version 1.0.1</p>
+                <p>Version 1.1.0</p>
             </div>
             <div className="col-span-2 text-xs">
                 <p>FE Sprite Builder by Shiny and Phalconid.</p>
