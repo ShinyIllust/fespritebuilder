@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Combiner from './Combiner';
 import Footer from './Footer.jsx'
+import AdjustPosition from './AdjustPosition.jsx';
+import OptionSelector from './OptionSelector.jsx';
 
 const loadHeadImages = (context) => {
   const images = {};
@@ -429,136 +431,13 @@ function ImageSelector() {
             onChange={(e) => setColor(e.target.value)} />
         </div>
         <div className='col-span-3 grid grid-cols-subgrid bg-[#F1DCA8] mt-1 rounded-lg'>
-          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
-            <div className='col-span-2 flex'>
-              <img
-                className='max-w-[32px] max-h-[32px]'
-                src={headMini}
-                style={{
-                  imageRendering: 'pixelated',
-                }}
-              />
-              <select
-                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
-                onChange={(e) => setSelectedHead(e.target.value)}
-                value={selectedHead}>
-                <option value='none'>none</option>
-                {headOptions.length > 0 ? (
-                  headOptions.map((head) => (
-                    <option key={head} value={head}>
-                      {head}
-                    </option>
-                  ))
-                ) : (
-                  <option>No heads available</option>
-                )}
-              </select>
-            </div>
-            <label className='col-span-1 text-sm md:text-base'>Head</label>
-          </div>
 
-          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
-            <div className='col-span-2 flex'>
-              <img
-                className='max-w-[32px] max-h-[32px]'
-                src={bodyMini}
-                style={{
-                  imageRendering: 'pixelated',
-                }}
-              />
-              <select
-                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
-                onChange={(e) => setSelectedBody(e.target.value)}
-                value={selectedBody}>
-                <option value='none'>none</option>
-                {bodyOptions.length > 0 ? (
-                  bodyOptions.map((body) => (
-                    <option key={body} value={body}>
-                      {body}
-                    </option>
-                  ))
-                ) : (
-                  <option>No bodies available</option>
-                )}
-              </select>
-            </div>
-            <label className='col-span-1 text-sm md:text-base'>Body</label>
-          </div>
-          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
-            <div className='col-span-2 flex'>
-              <img className='max-w-[32px] max-h-[32px]' src={accessoryMini} />
-              <select
-                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
-                onChange={(e) => setSelectedAccessory(e.target.value)}
-                value={selectedAccessory}>
-                <option value='none'>none</option>
-                {accessoryOptions.length > 0 ? (
-                  accessoryOptions.map((accessory) => (
-                    <option key={accessory} value={accessory}>
-                      {accessory}
-                    </option>
-                  ))
-                ) : (
-                  <option>No accessories available</option>
-                )}
-              </select>
-            </div>
-            <label className='col-span-1 text-sm md:text-base'>Extra</label>
-          </div>
-          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
-            <div className='col-span-2 flex'>
-              <img
-                className='max-w-[32px] max-h-[32px]'
-                src={earsMini}
-                style={{
-                  imageRendering: 'pixelated',
-                }}
-              />
-              <select
-                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
-                onChange={(e) => setSelectedEars(e.target.value)}
-                value={selectedEars}>
-                <option value='none'>none</option>
-                {earsOptions.length > 0 ? (
-                  earsOptions.map((ears) => (
-                    <option key={ears} value={ears}>
-                      {ears}
-                    </option>
-                  ))
-                ) : (
-                  <option>No ears available</option>
-                )}
-              </select>
-            </div>
-            <label className='col-span-1 text-sm md:text-base'>Ears</label>
-          </div>
-          <div className='col-span-3 grid grid-cols-subgrid border-[#CDA450] border-1'>
-            <div className='col-span-2 flex'>
-              <img
-                className='max-w-[32px] max-h-[32px]'
-                src={facialHairMini}
-                style={{
-                  imageRendering: 'pixelated',
-                }}
-              />
-              <select
-                className='max-w-30 min-w-30 md:min-w-65 md:max-w-65 text-sm md:text-base'
-                onChange={(e) => setSelectedFacialHair(e.target.value)}
-                value={selectedFacialHair}>
-                <option value='none'>none</option>
-                {facialHairOptions.length > 0 ? (
-                  facialHairOptions.map((facialHair) => (
-                    <option key={facialHair} value={facialHair}>
-                      {facialHair}
-                    </option>
-                  ))
-                ) : (
-                  <option>No facial hair available</option>
-                )}
-              </select>
-            </div>
-            <label className='col-span-1 text-sm md:text-base'>Facial Hair</label>
-          </div>
+          <OptionSelector optionType="Head" imageMini={headMini} selectedOption={selectedHead} setSelectedOption={setSelectedHead} options={headOptions} />
+          <OptionSelector optionType="Body" imageMini={bodyMini} selectedOption={selectedBody} setSelectedOption={setSelectedBody} options={bodyOptions} />
+          <OptionSelector optionType="Extra" imageMini={accessoryMini} selectedOption={selectedAccessory} setSelectedOption={setSelectedAccessory} options={accessoryOptions} />
+          <OptionSelector optionType="Ears" imageMini={earsMini} selectedOption={selectedEars} setSelectedOption={setSelectedEars} options={earsOptions} />
+          <OptionSelector optionType="Facial Hair" imageMini={facialHairMini} selectedOption={selectedFacialHair} setSelectedOption={setSelectedFacialHair} options={facialHairOptions} />
+          
         </div>
 
         <div className='col-span-1 grid grid-cols-subgrid bg-[#F1DCA8] rounded-lg w-full mt-1 h-25 md:h-20'>
@@ -576,208 +455,21 @@ function ImageSelector() {
         </div>
 
         {selectedHead != 'none' && (
-          <div className='col-span-2 grid grid-cols-subgrid gap-0'>
-            <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
-              <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Head X </label>
-              </div>
-              <div className='flex justify-around'>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setHeadX(headX - 1)}
-                >←</button>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setHeadX(headX + 1)}
-                >→</button>
-              </div>
-              <div>
-                <input
-                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                  type='number'
-                  value={headX}
-                  onChange={(e) => setHeadX(parseInt(e.target.value))}
-                /><span className=''>px</span>
-              </div>
-            </div>
-            <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
-              <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Head Y </label>
-              </div>
-              <div className='flex justify-around'>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setHeadY(headY - 1)}
-                >↑</button>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setHeadY(headY + 1)}
-                >↓</button>
-              </div>
-              <div>
-                <input
-                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                  type='number'
-                  value={headY}
-                  onChange={(e) => setHeadY(parseInt(e.target.value))}
-                /><span className=''>px</span>
-              </div>
-            </div>
-          </div>
+          <AdjustPosition adjustType="Head" valueX={headX} valueY={headY} setX={setHeadX} setY={setHeadY} />
         )}
 
         {selectedAccessory != 'none' && (
-          <div className='col-span-2 grid grid-cols-subgrid gap-0'>
-            <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
-              <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Extra X </label>
-              </div>
-              <div className='flex justify-around'>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setAccessoryX(accessoryX - 1)}
-                >←</button>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setAccessoryX(accessoryX + 1)}
-                >→</button>
-              </div>
-              <div>
-                <input
-                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                  type='number'
-                  value={accessoryX}
-                  onChange={(e) => setAccessoryX(parseInt(e.target.value))}
-                /><span className=''>px</span>
-              </div>
-            </div>
-            <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
-              <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Extra Y </label>
-              </div>
-              <div className='flex justify-around'>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setAccessoryY(accessoryY - 1)}
-                >↑</button>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setAccessoryY(accessoryY + 1)}
-                >↓</button>
-              </div>
-              <div>
-                <input
-                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                  type='number'
-                  value={accessoryY}
-                  onChange={(e) => setAccessoryY(parseInt(e.target.value))}
-                /><span className=''>px</span>
-              </div>
-            </div>
-          </div>
+          <AdjustPosition adjustType="Extra" valueX={accessoryX} valueY={accessoryY} setX={setAccessoryX} setY={setAccessoryY} />
         )}
 
         {selectedEars != 'none' && (
-          <div className='col-span-2 grid grid-cols-subgrid gap-0'>
-            <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
-              <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Ears X </label>
-              </div>
-              <div className='flex justify-around'>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setEarsX(earsX - 1)}
-                >←</button>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setEarsX(earsX + 1)}
-                >→</button>
-              </div>
-              <div>
-                <input
-                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                  type='number'
-                  value={earsX}
-                  onChange={(e) => setEarsX(parseInt(e.target.value))}
-                /><span className=''>px</span>
-              </div>
-            </div>
-            <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
-              <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Ears Y </label>
-              </div>
-              <div className='flex justify-around'>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setEarsY(earsY - 1)}
-                >↑</button>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setEarsY(earsY + 1)}
-                >↓</button>
-              </div>
-              <div>
-                <input
-                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                  type='number'
-                  value={earsY}
-                  onChange={(e) => setEarsY(parseInt(e.target.value))}
-                /><span className=''>px</span>
-              </div>
-            </div>
-          </div>
+          <AdjustPosition adjustType="Ears" valueX={earsX} valueY={earsY} setX={setEarsX} setY={setEarsY} />
         )}
 
         {selectedFacialHair != 'none' && (
-          <div className='col-span-2 grid grid-cols-subgrid gap-0'>
-            <div className='bg-[#F1DCA8] rounded-l-lg w-full mt-1 grid grid-cols-subgrid'>
-              <div className='bg-[#402C0E] p-1 w-full rounded-tl-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Facial Hair X </label>
-              </div>
-              <div className='flex justify-around'>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setFacialHairX(facialHairX - 1)}
-                >←</button>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setFacialHairX(facialHairX + 1)}
-                >→</button>
-              </div>
-              <div>
-                <input
-                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                  type='number'
-                  value={facialHairX}
-                  onChange={(e) => setFacialHairX(parseInt(e.target.value))}
-                /><span className=''>px</span>
-              </div>
-            </div>
-            <div className='bg-[#F1DCA8] rounded-r-lg w-full mt-1 grid grid-cols-subgrid'>
-              <div className='bg-[#402C0E] p-1 w-full rounded-tr-lg text-[#EBA92C] text-center'>
-                <label className='textShadow'>Facial Hair Y </label>
-              </div>
-              <div className='flex justify-around'>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setFacialHairY(facialHairY - 1)}
-                >↑</button>
-                <button
-                  className='textShadow text-left bg-[#2C2B1E] text-[#EBA92C] hover:cursor-pointer text-sm md:text-base p-1 rounded-sm m-1 w-10 flex justify-center'
-                  onClick={() => setFacialHairY(facialHairY + 1)}
-                >↓</button>
-              </div>
-              <div>
-                <input
-                  className='w-6 md:w-25 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-                  type='number'
-                  value={facialHairY}
-                  onChange={(e) => setFacialHairY(parseInt(e.target.value))}
-                /><span className=''>px</span>
-              </div>
-            </div>
-          </div>
+          <AdjustPosition adjustType="Facial Hair" valueX={facialHairX} valueY={facialHairY} setX={setFacialHairX} setY={setFacialHairY} />
         )}
+
         <Footer />
       </div>
     </div >
